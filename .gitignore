@@ -1,4 +1,5 @@
 .runconfigs
+scikit-survival
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

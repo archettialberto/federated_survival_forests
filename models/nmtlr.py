@@ -56,8 +56,8 @@ def train_nmtlr(X_train, y_train, X_val, y_val, hidden_features, labtrans, msg="
     model = init_model(X_train.shape[1], hidden_features, labtrans)
     callbacks = [tt.callbacks.EarlyStopping(patience=100)]
     log = model.fit(X_train, __y_train, epochs=1000, val_data=val_data, verbose=False, callbacks=callbacks)
-    plt.title(f"[{datetime.now()}] {msg}")
-    log.plot()
+    # plt.title(f"[{datetime.now()}] {msg}")
+    # log.plot()
     return model
 
 
