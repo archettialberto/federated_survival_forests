@@ -8,9 +8,18 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
+ENV VIRTUAL_ENV=/opt/venv
+RUN python -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
-RUN chmod -R 777 /usr/local/lib/python3.10/site-packages/pycox/datasets
+
+# Enable Jupyter
+RUN pip install jupyter tornado nbconvert matplotlib seaborn
+RUN mkdir -p /.local
+RUN chmod -R 777 /.local
+RUN chmod -R 777 /opt/venv/lib/python3.10/site-packages/pycox/datasets
 
 WORKDIR /exp
 

@@ -5,7 +5,7 @@ import torch
 from sklearn.model_selection import train_test_split
 from sksurv.metrics import integrated_brier_score, concordance_index_censored, concordance_index_ipcw
 
-from data import get_valid_test_times, get_dataframe, preprocess_dataframe
+from data import get_dataframe, preprocess_dataframe
 from splits import uniform_split, label_skew_split, quantity_skew_split
 
 SPLIT_FNS = {
@@ -34,24 +34,23 @@ def set_parameters(model, parameters):
 
 
 def evaluate_surv_fns(y_train, y_test, survs):
-    times = get_valid_test_times(y_train, y_test)
+    sorted_train_times = np.sort(np.unique(y_train["time"]))
+    sorted_test_times = np.sort(np.unique(y_test["time"]))
+    times = np.linspace(
+        start=max(sorted_train_times[1], sorted_test_times[1]),
+        stop=min(sorted_train_times[-2], sorted_test_times[-2]),
+        num=100
+    )
     preds = np.array([fn(times) for fn in survs], dtype=np.float32)
-    try:
-        ibs = integrated_brier_score(y_train, y_test, preds, times)
-    except ValueError:
-        ibs = 0.25
+    preds = np.nan_to_num(preds, nan=0.5)
     preds[preds < 0.0] = 0.0
-    preds[preds == 0.0] += 1e-4
+    preds[preds > 1.0] = 1.0
+    preds = preds * (1.0 - 1e-8) + 1e-8
     risks = -np.log(preds)
-    risks = np.sum(risks, axis=1)
-    try:
-        c_index = concordance_index_censored(y_test["event"], y_test["time"], risks)[0]
-    except ValueError:
-        c_index = 0.5
-    try:
-        c_index_ipcw = concordance_index_ipcw(y_train, y_test, risks)[0]
-    except ValueError:
-        c_index_ipcw = 0.5
+    cum_risks = np.sum(risks, axis=1)
+    c_index = concordance_index_censored(y_test["event"], y_test["time"], cum_risks)[0]
+    c_index_ipcw = concordance_index_ipcw(y_train, y_test, cum_risks)[0]
+    ibs = integrated_brier_score(y_train, y_test, preds, times)
     return c_index, c_index_ipcw, ibs
 
 

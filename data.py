@@ -61,10 +61,3 @@ def preprocess_dataframe(df: pd.DataFrame, split_size=0.2) -> (np.ndarray, np.nd
     y_train = np.array([(e, t) for e, t in zip(df_train['event'], df_train['time'])], dtype=sksurv_type)
     y_test = np.array([(e, t) for e, t in zip(df_test['event'], df_test['time'])], dtype=sksurv_type)
     return X_train, X_test, y_train, y_test
-
-
-def get_valid_test_times(y_train, y_test):
-    train_times = np.sort(np.unique(y_train["time"]))
-    test_times = np.sort(np.unique(y_test["time"]))[:-1]
-    test_times = test_times[test_times < np.max(train_times)]
-    return test_times
