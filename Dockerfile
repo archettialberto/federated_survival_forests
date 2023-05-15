@@ -1,6 +1,6 @@
 FROM python:3.10.9-slim-buster
 
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install -y \
     build-essential \
     curl \
     software-properties-common \
@@ -23,4 +23,4 @@ RUN chmod -R 777 /opt/venv/lib/python3.10/site-packages/pycox/datasets
 
 WORKDIR /exp
 
-CMD ["bash"]
+CMD ["python", "exps.py"]

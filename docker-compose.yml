@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  fedsurf-experiments:
+    container_name: fedsurf-experiments
+    image: fedsurf/fedsurf:latest
+    environment:
+        - PYTHONBUFFERED=1
+    volumes:
+      - .:/exp
