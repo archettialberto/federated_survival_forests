@@ -4,14 +4,14 @@ This repo contains the source code of the experiments presented in the paper "Fe
 Federated Survival Forest (FedSurF) is a novel federated learning algorithm for survival analysis. It relies on 
 Random Survival Forests (RSF) [2] to build a federated ensemble of survival trees. Tree selection occurs randomly
 with a probability proportional to the local performance of each tree. The algorithm is implemented using a custom 
-version of [scikit-survival](https://github.com/archettialberto/scikit-survival) that supports averaging of survival 
+version of [scikit-survival](https://github.com/archettialberto/scikit-survival) that supports the averaging of survival 
 functions. Baseline methods relying on neural networks are implemented using [PyCox](https://github.com/havakv/pycox).
 
-Experiments are run on standard dataset for survival analysis with federated splits induced with the algorithms
+Experiments are run on standard datasets for survival analysis with federated splits induced by the algorithms
 described in [3], which allow testing on heterogeneous federations with different label splits for each client.
 
 For more information, please take a look at
-* [Federated Survival Forests](https://arxiv.org/abs/2302.02807) [1] for the FedSurF algorithm, code, experiments and results description.
+* [Federated Survival Forests](https://arxiv.org/abs/2302.02807) [1] for the FedSurF algorithm, code, experiments, and results description.
 * [Heterogeneous Datasets for Federated Survival Analysis Simulation](https://arxiv.org/abs/2301.12166) [3] for the federated dataset generation algorithms.
 
 
@@ -36,18 +36,19 @@ docker compose run fedsurf-experiments
 The results will be saved in the ```logs``` directory.
 
 NOTE: ```docker compose``` mounts the current directory in the ```/exp``` directory of the container, so you can edit the 
-code in ```exps.py``` and run it without rebuilding the image.
+code in ```exps.py``` and run without rebuilding the image.
 
 
 
 ## 📕 Bibtex Citation
 ```
 @inproceedings{archetti2023federated,
-    author    = {Archetti, Alberto and Matteucci, Matteo},
-    title     = {{Federated} {Survival} {Forests}},
-    booktitle = {2023 International Joint Conference on Neural Networks (IJCNN2023)},
-    year      = {2023},
-    publisher = {IEEE (in press)}
+    author={Archetti, Alberto and Matteucci, Matteo},
+    booktitle={2023 International Joint Conference on Neural Networks (IJCNN)}, 
+    title={Federated Survival Forests}, 
+    year={2023},
+    pages={1-9},
+    doi={10.1109/IJCNN54540.2023.10190999}
 }
 ```
 
