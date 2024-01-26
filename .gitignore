@@ -1,3 +1,6 @@
+.idea
+.vscode
+*.pt
 .runconfigs
 scikit-survival
 

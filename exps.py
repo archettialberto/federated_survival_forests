@@ -11,19 +11,33 @@ from models.nnet_survival import nnet_exp
 from models.pch import pch_exp
 from models.rsf import rsf_exp
 
-SEEDS = [50494, 55125, 37118, 31514, 5306]  # random seeds for reproducibility
+# Random seeds for reproducibility. We use a single seed for each run.
+SEEDS = [1234]
 
-DATASETS = ["GBSG2", "metabric", "support2", "flchain", "Aids2"]
+# Dataset to run experiments on. The available datasets are:
+# - GBSG2
+# - metabric
+# - support2
+# - flchain
+# - Aids2
+DATASETS = ["GBSG2"]
 
-# federation parameters
+# Minimum number of samples per client dataset.
 MIN_SAMPLES = 25
+
+# Split types. Each experiment is run on all the split types provided. The available split types are:
+# - uniform: splits the dataset uniformly among clients
+# - label_skew: splits the dataset among clients so that each client has a different label distribution
 SPLITS = [
     ("uniform", {"min_samples": MIN_SAMPLES}),
     ("label_skew", {"min_samples": MIN_SAMPLES, "alpha": 8.0}),
 ]
+
+# Number of clients in the federation. Each experiment is run on all the number of clients provided.
 NUM_CLIENTS = [10]
 
-# parameters for RSF experiments
+# Parameters for Random Survival Forests are dataset-specific. 
+# The parameters below are the deafult used in the original paper.
 RSF_PARAMS = {
     "GBSG2": {'max_depth': None, 'max_features': 'sqrt', 'min_samples_split': 20, 'n_estimators': 100, 'n_jobs': -1},
     "metabric": {'max_depth': 20, 'max_features': 'log2', 'min_samples_split': 15, 'n_estimators': 200, 'n_jobs': -1},
@@ -31,6 +45,8 @@ RSF_PARAMS = {
     "flchain": {'max_depth': None, 'max_features': 'sqrt', 'min_samples_split': 20, 'n_estimators': 200, 'n_jobs': -1},
     "Aids2": {'max_depth': None, 'max_features': 'sqrt', 'min_samples_split': 5, 'n_estimators': 2000, 'n_jobs': -1},
 }
+
+# Number of trees to train in the federation. For each dataset, we run experiments on all the number of trees provided.
 NUM_FED_TREES = {
     "GBSG2": [100, 200, 300, 400, 500],
     "metabric": [100, 200, 300, 400, 500],

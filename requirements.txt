@@ -1,7 +1,6 @@
-git+https://github.com/archettialberto/scikit-survival.git#egg=scikit-survival
 --find-links https://download.pytorch.org/whl/torch_stable.html
-torch~=2.0.0
-flwr[simulation]~=1.0.0
-pycox~=0.2.3
-SurvSet~=0.2.6
-sklearndf~=2.1.0
+torch==2.0.0+cpu
+flwr[simulation]==1.0.0
+pycox==0.2.3
+SurvSet==0.2.6
+sklearndf==2.1.0

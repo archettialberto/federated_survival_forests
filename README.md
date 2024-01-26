@@ -15,29 +15,42 @@ For more information, please take a look at
 * [Heterogeneous Datasets for Federated Survival Analysis Simulation](https://arxiv.org/abs/2301.12166) [3] for the federated dataset generation algorithms.
 
 
-## ⚙️ Installation
+## 🛠️ Usage
 
 Clone the repository:
 ```bash
 git clone https://github.com/archettialberto/federated_survival_forests
 ```
-Install the Docker image:
-```bash
-docker build -t fedsurf/fedsurf:latest .
-```
-
-## 🛠️ Usage
 
 Run ```docker compose``` to start the experiments:
 ```bash
 docker compose run fedsurf-experiments
 ```
 
-The results will be saved in the ```logs``` directory.
+The results will be saved in the ```logs``` directory. 
+Please note that ```docker compose``` mounts the current directory in the ```/exp``` directory of the container, 
+so you can edit the code in ```exps.py``` and run without rebuilding the image.
 
-NOTE: ```docker compose``` mounts the current directory in the ```/exp``` directory of the container, so you can edit the 
-code in ```exps.py``` and run without rebuilding the image.
+If you want to build a new Docker image, run
+```bash
+docker build -t aarchetti/fedsurf:latest .
+```
 
+
+## ⚙️ Installation Outside Docker (Not Recommended)
+
+- Install Python 3.10
+- Clone the repo with `git clone https://github.com/archettialberto/federated_survival_forests`
+- Move to the repo directory with `cd federated_survival_forests`
+- Create a new virtual environment with `python -m venv venv`
+- Activate the environment with `source venv/bin/activate`
+- Install the dependencies with `pip install -r requirements.txt`
+- Clone the helper repo with `git clone https://github.com/archettialberto/scikit-survival`
+- Move to the helper repo directory with `cd scikit-survival`
+- Update git submodules with `git submodule update --init`
+- Move back to the `federated_survival_forests` directory with `cd ..`
+- Install `scikit-survival` with `pip install ./scikit-survival`
+- At this point, you can run `python exps.py` without Docker
 
 
 ## 📕 Bibtex Citation
